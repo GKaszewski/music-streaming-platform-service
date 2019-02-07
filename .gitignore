@@ -1,0 +1,6 @@
+.vs/*
+env
+__pycache__/*
+.vscode/*
+song.json
+creds.json

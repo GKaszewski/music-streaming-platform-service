@@ -1,0 +1,4 @@
+firebase-admin == 2.15.1 
+flask==1.0.2 
+markdown == 3.0.1
+gunicorn == 19.9.0
