@@ -23,3 +23,12 @@ class Song:
 
     def getAlbumUrl(self):
         return self.albumUrl
+
+
+class User:
+    email = "";
+    password = "";
+
+    def __init__(self, email, password):
+        self.email = email;
+        self.password = password;
