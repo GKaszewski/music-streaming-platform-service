@@ -39,3 +39,5 @@ def postNewUser(email, password):
 @app.route('/auth/login/user/<email>&password')
 def loginUser(email, password):
     fb.auth.get_user_by_email(email)
+
+#bbb
