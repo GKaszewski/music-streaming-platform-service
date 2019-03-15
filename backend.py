@@ -31,13 +31,3 @@ def getSong(title):
 @app.route("/song/search/<query>")
 def getSongsByQuery(query):
     return 'nothing here yet...'
-
-@app.route('/auth/create/user/<email>&<password>')
-def postNewUser(email, password):
-    fb.auth.create_user({'email': emial, 'password': password})
-
-@app.route('/auth/login/user/<email>&password')
-def loginUser(email, password):
-    fb.auth.get_user_by_email(email)
-
-#bbb
