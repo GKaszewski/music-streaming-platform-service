@@ -1,7 +1,7 @@
 from flask import Flask, Response, render_template, Markup, jsonify
 import markdown, os
 import firebase_admin as fb
-from firebase_admin import db, auth
+from firebase_admin import db
 from api import Song
 
 app = Flask(__name__)
