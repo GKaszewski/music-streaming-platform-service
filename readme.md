@@ -1,4 +1,4 @@
-#Music Streaming Platform service
+# Music Streaming Platform service
 
 Songs
 ======
@@ -21,9 +21,9 @@ Songs
 ],
 ```
 
-##Different requests to get song or songs.
+# Different requests to get song or songs.
 
-##Get song by title
+# Get song by title
 **Definition**
 `GET /song/<title>`
 
@@ -43,7 +43,7 @@ Songs
 }
 ```
 
-##Get song/s by search query
+# Get song/s by search query
 **Definition**
 `GET /song/<query>`
 
