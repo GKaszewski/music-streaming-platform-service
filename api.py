@@ -1,3 +1,5 @@
+import json
+
 class Song:
     albumName = ""
     albumUrl = ""
@@ -18,8 +20,25 @@ class Song:
         newSong = Song(songObj.child('albumName').get(), songObj.child('albumUrl').get(), songObj.child('author').get(), songObj.child('songUrl').get(), songObj.child('tags').get(), songObj.child('title').get())
         return newSong
 
+    def createFromDict(dict):
+        newSong = Song(dict['albumName'], dict['albumUrl'], dict['author'], dict['songUrl'], dict['tags'], dict['title'])
+        return newSong
+
     def getSongUrl(self):
         return self.songUrl
 
     def getAlbumUrl(self):
         return self.albumUrl
+
+    def toJson(self):
+        obj = {
+            'albumName':self.albumName,
+            'albumUrl':self.albumUrl,
+            'author':self.author,
+            'songUrl':self.songUrl,
+            'tags':self.tags,
+            'title':self.title,
+        }
+
+        return json.dumps(obj)
+

@@ -1,5 +1,5 @@
 from flask import Flask, Response, render_template, Markup, jsonify
-import markdown, os
+import markdown, os, collections, json
 import firebase_admin as fb
 from firebase_admin import db
 from api import Song
@@ -12,6 +12,7 @@ creds = fb.credentials.Certificate(credsPath)
 firebaseApp = fb.initialize_app(creds, {
     "databaseURL": 'https://musicstreamingplatform.firebaseio.com/'
 })
+db = fb.db.reference('/')
 ##
 
 
@@ -30,4 +31,10 @@ def getSong(title):
 
 @app.route("/song/search/<query>")
 def getSongsByQuery(query):
-    return 'nothing here yet...'
+    songs = db.order_by_key().start_at(query).end_at(u'{0}\uf8ff'.format(query)).get()
+    listOfSongs = []
+    for key, val in songs.items():
+        songRef = Song.createFromDict(val[0])
+        listOfSongs.append(json.loads(songRef.toJson()))
+
+    return jsonify(listOfSongs)
