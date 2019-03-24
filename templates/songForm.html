@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Upload song</h1>
+    <form action="" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.songName.label }} <br>
+            {{ form.songName(size=128)}}
+        </p>
+        <p>
+                {{ form.albumName.label }} <br>
+                {{ form.albumName(size=128)}}
+        </p>
+        <p>
+                {{ form.author.label }} <br>
+                {{ form.author(size=128)}}
+        </p>
+        <p>
+                {{ form.songUrl.label }} <br>
+                {{ form.songUrl}}
+        </p>
+        <p>
+                {{ form.cover.label }} <br>
+                {{ form.cover}}
+        </p>
+        <p>
+                {{ form.sendForm() }}
+        </p>
+    </form> 
+{% endblock %} 

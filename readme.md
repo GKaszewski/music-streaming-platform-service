@@ -45,7 +45,7 @@ Songs
 
 # Get song/s by search query
 **Definition**
-`GET /song/<query>`
+`GET /song/search/<query>`
 
 **Example Response**
 * `200 OK` on success

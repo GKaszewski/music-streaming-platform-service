@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - Upload song</title>>
+        {% else %}
+        <title>API - Upload song</title>
+        {% endif %}
+    </head>
+    <body>
+        <div>
+            Music Streaming Platform Service: 
+            <a href="/">Home</a>
+            <a href="/upload/song">Upload song</a>
+        </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </body>
+</html>

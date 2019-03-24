@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Music Streaming Platform service</title>
-  </head>
-  <body>    
-    {% filter markdown %}
-    {{ content }}
-    {% endfilter %}
-  </body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+  {{ content }}
+{% endblock %} 
