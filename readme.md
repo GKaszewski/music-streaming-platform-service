@@ -84,11 +84,11 @@ Songs
 
 Playlists
 =========
-#Create playlist
+## Create playlist
 **Definition**
 `POST /playlist/create/<user>&<playlistName>`
 
-# Add song to the playlist
+## Add song to the playlist
 **Definition**
 `POST /playlist/<user>&<playlistName>/add_song/<albumName>&<cover>&<title>&<songUrl>&<author>`
 
