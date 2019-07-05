@@ -84,4 +84,12 @@ Songs
 
 Playlists
 =========
-Maybe will be added later!
+#Create playlist
+**Definition**
+`POST /playlist/create/<user>&<playlistName>`
+
+# Add song to the playlist
+**Definition**
+`POST /playlist/<user>&<playlistName>/add_song/<albumName>&<cover>&<title>&<songUrl>&<author>`
+
+
