@@ -16,6 +16,18 @@ class Song:
         self.albumUrl = albumUrl
         self.albumName = albumName
 
+    def to_dict(self):
+        return {
+            '{}'.format(self.title.lower()) : {
+                'albumName' : self.albumName,
+                'albumUrl' : self.albumUrl,
+                'author' : self.author,
+                'songUrl' : self.songUrl,
+                'title' : self.title,
+                'tags' : self.tags,
+            }, 
+        }
+
     def create(songObj):
         newSong = Song(songObj.child('albumName').get(), songObj.child('albumUrl').get(), songObj.child('author').get(), songObj.child('songUrl').get(), songObj.child('tags').get(), songObj.child('title').get())
         return newSong
