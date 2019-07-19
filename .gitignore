@@ -1,6 +1,4 @@
-.vs/*
-env
-__pycache__/*
+#directories
+venv/*
+OLD/*
 .vscode/*
-song.json
-creds.json
