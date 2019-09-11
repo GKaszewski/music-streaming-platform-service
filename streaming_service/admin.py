@@ -1,3 +1,10 @@
 from django.contrib import admin
+from . import models
 
-# Register your models here.
+
+class SongAdminModel(admin.ModelAdmin):
+    list_display = ('albumName', 'author', 'title', 'albumUrl', 'songUrl')
+    list_filter = ('author', 'title', 'albumName')
+    search_fields = ['author', 'title', 'albumName']
+
+admin.site.register(models.Song, SongAdminModel)

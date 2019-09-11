@@ -7,3 +7,6 @@ class Song(models.Model):
     songUrl = models.URLField()
     title = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.author + ' ' + self.title
+
