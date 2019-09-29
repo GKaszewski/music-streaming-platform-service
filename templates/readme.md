@@ -1,4 +1,4 @@
-# Music Streaming Platform service
+# Music Streaming Platform service 
 
 Songs
 ======
@@ -25,7 +25,7 @@ Songs
 
 # Get song by title
 **Definition**
-`GET /song/<title>`
+`GET api/song/?search=title`
 
 **Example Response**
 * `200 OK` on success
@@ -45,7 +45,7 @@ Songs
 
 # Get song/s by search query
 **Definition**
-`GET /song/search/<query>`
+`GET api/song/?search=query`
 
 **Example Response**
 * `200 OK` on success
@@ -86,9 +86,9 @@ Playlists
 =========
 ## Create playlist
 **Definition**
-`POST /playlist/create/<user>&<playlistName>`
+`POST api/playlist/create/<user>&<playlistName>`
 
 ## Add song to the playlist
 **Definition**
-`POST /playlist/<user>&<playlistName>/add_song/<albumName>&<cover>&<title>&<songUrl>&<author>`
+`POST api/playlist/<user>&<playlistName>/add_song/<albumName>&<cover>&<title>&<songUrl>&<author>`
 

@@ -22,4 +22,5 @@ from . import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     path('', include('streaming_service.urls')),
+    path('auth/', include('rest_framework.urls'), name='auth')
 ]

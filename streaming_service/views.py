@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions, filters, generics
 from . import models, song_api
 
 import os
@@ -27,3 +27,17 @@ class MarkdownIndex(TemplateView):
 
 class UploadSongView(TemplateView):
     template_name = 'songForm.html'
+
+class SongViewSet(viewsets.ModelViewSet):
+    search_fields = ['author', 'title', 'albumName', 'category']
+    filter_backends = (filters.SearchFilter,)
+    queryset = models.Song.objects.all()
+    serializer_class = song_api.SongSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+class PlaylistViewSet(viewsets.ModelViewSet):
+    search_fields = ['name',]
+    filter_backends = (filters.SearchFilter,)
+    queryset = models.Playlist.objects.all()
+    serializer_class = song_api.PlaylistSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)

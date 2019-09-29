@@ -3,3 +3,7 @@ markdown == 3.1.1
 django-restframework == 3.10.3
 django-markdownify == 0.8.0
 django-filter == 2.2.0  
+django-model-utils == 3.2.0
+#only for deployment to heroku
+gunicorn === 19.9.0 
+django-heroku === 0.3.1
