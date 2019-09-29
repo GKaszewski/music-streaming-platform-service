@@ -8,4 +8,3 @@ class SongAdminModel(admin.ModelAdmin):
     search_fields = ['author', 'title', 'albumName']
 
 admin.site.register(models.Song, SongAdminModel)
-admin.site.register(models.Playlist)
