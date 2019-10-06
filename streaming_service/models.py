@@ -6,7 +6,7 @@ class Song(models.Model):
     albumName = models.CharField(max_length=100)
     albumUrl = models.URLField()
     author = models.CharField(max_length=200)
-    songUrl = models.URLField()
+    songUrl = models.CharField(max_length=400)
     title = models.CharField(max_length=200)
     CATEGORIES = Choices('POP','INDIE','ROCK','RAP','HIP-HOP','ELECTRONIC','JAZZ''ROMANTIC','HAPPY','SAD')
     category = models.CharField(choices=CATEGORIES, max_length=50, default=CATEGORIES.SAD)
