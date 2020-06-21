@@ -38,10 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'streaming_service',
     'markdownify',
     'corsheaders'
 ]
+
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:4200',
@@ -55,10 +57,10 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'microservice.urls'
@@ -94,6 +96,13 @@ DATABASES = {
         'HOST': 'ec2-107-22-211-248.compute-1.amazonaws.com',
         'PORT': '5432',
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
 }
 
 
@@ -138,8 +147,6 @@ STATIC_URL = '/static/'
 MARKDOWNIFY_MARKDOWN_EXTENSIONS = ['markdown.extensions.fenced_code',
                                    'markdown.extensions.extra', ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES' : ('rest_framework.permissions.IsAuthenticatedOrReadOnly',),
-}
+AUTH_USER_MODEL = 'streaming_service.User'
 
 django_heroku.settings(locals())

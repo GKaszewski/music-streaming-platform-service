@@ -1,6 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField 
 from model_utils import Choices
+
+from  rest_framework import serializers
 
 class Song(models.Model):
     albumName = models.CharField(max_length=100)
@@ -20,3 +23,29 @@ class Playlist(models.Model):
 
     def __str__(self):
         return self.name
+
+class User(AbstractUser):
+    playlists = models.ManyToManyField(Playlist)
+
+    def __str__(self):
+        return self.username
+
+class SongSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Song
+        fields = ('albumName', 'albumUrl', 'author', 'songUrl' ,'title', 'category')
+
+class PlaylistSerializer(serializers.ModelSerializer):
+    content = SongSerializer(many=True)
+    class Meta:
+        model = Playlist
+        fields = ('name', 'content')
+
+class UserSerializer(serializers.ModelSerializer):
+    playlists = PlaylistSerializer(many=True, required=False)
+
+    class Meta:
+        model = User
+        fields = ('username', 'playlists', 'password')
+        extra_kwargs = {'password': {'write_only' : True, 'required' : True},}
+

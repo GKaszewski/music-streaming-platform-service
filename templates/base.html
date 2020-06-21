@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% if title %}
-        <title>{{ title }} - Upload song</title>>
-        {% else %}
-        <title>API - Upload song</title>
-        {% endif %}
+        <title>Streaming Service API</title>
     </head>
     <body>
         <div>
             Music Streaming Platform Service: 
             <a href="/">Home</a>
-            <a href="/upload/song">Upload song</a>
         </div>
         {% block content %}{% endblock %}
     </body>
