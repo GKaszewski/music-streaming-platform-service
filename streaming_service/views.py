@@ -50,10 +50,12 @@ class PlaylistViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     authentication_classes = (TokenAuthentication,)
     
-class CreateUserViewSet(generics.CreateAPIView):
+class UserViewSet(viewsets.ModelViewSet):
     serializer_class = models.UserSerializer
-    authentication_classes = ()
-    permission_classes = ()
+    queryset = models.User.objects.all()
+    lookup_field = 'username'
+    authentication_classes = (TokenAuthentication,)
+    permissions_classes = (permissions.IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data, context={'request': request})
@@ -61,14 +63,15 @@ class CreateUserViewSet(generics.CreateAPIView):
         data = serializer.validated_data
         user = models.User.objects.create_user(**data)
         user.save()
-        return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
+        return Response(data, status=status.HTTP_201_CREATED)
 
-class UserViewSet(generics.RetrieveAPIView):
-    serializer_class = models.UserSerializer
-    queryset = models.User.objects.all()
-    lookup_field = 'username'
-    authentication_classes = (TokenAuthentication,)
-    permissions_classes = (permissions.IsAuthenticated,)
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            self.permission_classes = (permissions.AllowAny,)
+        if self.request.method == 'DELETE':
+            self.permission_classes = (permissions.IsAdminUser,)
+
+        return super(UserViewSet, self).get_permissions()
 
     
 class AuthUserToken(ObtainAuthToken):
