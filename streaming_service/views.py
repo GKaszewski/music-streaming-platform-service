@@ -43,7 +43,7 @@ class SongViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     authentication_classes = (TokenAuthentication,)
 class PlaylistViewSet(viewsets.ModelViewSet):
-    search_fields = ['name',]
+    search_fields = ['name', 'author',]
     filter_backends = (filters.SearchFilter,)
     queryset = models.Playlist.objects.all()
     serializer_class = models.PlaylistSerializer

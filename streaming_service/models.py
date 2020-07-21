@@ -5,6 +5,10 @@ from model_utils import Choices
 
 from  rest_framework import serializers
 
+class User(AbstractUser):
+    def __str__(self):
+        return self.username
+
 class Song(models.Model):
     albumName = models.CharField(max_length=100)
     albumUrl = models.URLField()
@@ -20,15 +24,16 @@ class Song(models.Model):
 class Playlist(models.Model):
     name = models.CharField(max_length = 90)
     content = models.ManyToManyField(Song)
+    author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
-class User(AbstractUser):
-    playlists = models.ManyToManyField(Playlist)
-
-    def __str__(self):
-        return self.username
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'password')
+        extra_kwargs = {'password': {'write_only' : True, 'required' : True},}
 
 class SongSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,15 +42,10 @@ class SongSerializer(serializers.ModelSerializer):
 
 class PlaylistSerializer(serializers.ModelSerializer):
     content = SongSerializer(many=True)
+    author = UserSerializer()
     class Meta:
         model = Playlist
-        fields = ('name', 'content')
+        fields = ('name', 'content', 'author')
 
-class UserSerializer(serializers.ModelSerializer):
-    playlists = PlaylistSerializer(many=True, required=False)
 
-    class Meta:
-        model = User
-        fields = ('username', 'playlists', 'password')
-        extra_kwargs = {'password': {'write_only' : True, 'required' : True},}
 
