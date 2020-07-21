@@ -1,7 +1,6 @@
 # Music Streaming Platform service 
 
-Songs
-======
+# Songs
 
 **Example song object**
 ```json
@@ -21,9 +20,9 @@ Songs
 ],
 ```
 
-# Different requests to get song or songs.
+## Different requests to get song or songs.
 
-# Get song by title
+## Get song by title
 **Definition**
 `GET api/song/?search=title`
 
@@ -43,7 +42,7 @@ Songs
 }
 ```
 
-# Get song/s by search query
+## Get song/s by search query
 **Definition**
 `GET api/song/?search=query`
 
@@ -82,13 +81,51 @@ Songs
 ]
 ```
 
-Playlists
-=========
+# Playlists
 ## Create playlist
 **Definition**
-`POST api/playlist/create/<user>&<playlistName>`
+`POST api/playlist/`
+Send in body data as 
+```json
+{
+    "name:"playlist_name",
+    "content": [
+            {
+                "albumName": "",
+                "albumUrl": "",
+                "author": "",
+                "songUrl": "",
+                "title": "",
+                "category": ""
+            },
+            {
+                "albumName": "",
+                "albumUrl": "",
+                "author": "",
+                "songUrl": "",
+                "title": "",
+                "category": ""
+            } ... etc
+        ]
+}
+```
 
 ## Add song to the playlist
 **Definition**
-`POST api/playlist/<user>&<playlistName>/add_song/<albumName>&<cover>&<title>&<songUrl>&<author>`
-
+`PUT api/playlist/`
+Send in body data
+```json
+{
+    "name:"playlist_name",
+    "content": [
+            {
+                "albumName": "",
+                "albumUrl": "",
+                "author": "",
+                "songUrl": "",
+                "title": "",
+                "category": ""
+            }
+        ]
+}
+```

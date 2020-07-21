@@ -2,5 +2,5 @@
 
 {% block content %}
   {% load markdownify %}
-  {{ markdowntext | markdownify }}
+  {{ markdowntext | markdownify | linebreaks }}
 {% endblock %} 
