@@ -1,0 +1,17 @@
+#directories
+env/*
+venv/*
+.idea/*
+OLD/*
+.vscode/*
+
+# temp files
+microservice/__pycache__/*
+streaming_service/__pycache__/*
+streaming_service/migrations/*
+
+#db
+db.sqlite3
+
+staticfiles/*
+microservice/settings.py
