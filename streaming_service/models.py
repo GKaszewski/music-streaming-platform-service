@@ -6,6 +6,7 @@ from model_utils import Choices
 from  rest_framework import serializers
 
 class User(AbstractUser):
+    avatar_url = models.URLField(blank=True, null=True)
     def __str__(self):
         return self.username
 
@@ -47,7 +48,7 @@ class Playlist(models.Model):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'password')
+        fields = ('id', 'username', 'password', 'avatar_url')
         extra_kwargs = {'password': {'write_only' : True, 'required' : True},}
 
 class ArtistSerializer(serializers.ModelSerializer):
