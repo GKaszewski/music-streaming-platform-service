@@ -13,10 +13,6 @@ from .permissions import IsOwnProfile, IsArtist
 import os
 
 from microservice import settings
-
-def index(request):
-    return HttpResponse('<b>This is api page</b>')
-
 class MarkdownIndex(TemplateView):
     template_name = 'index.html'
 
