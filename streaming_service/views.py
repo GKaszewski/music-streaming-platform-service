@@ -25,7 +25,7 @@ class MarkdownIndex(TemplateView):
         return context
 
 class SongViewSet(viewsets.ModelViewSet):
-    search_fields = ['author', 'title', 'albumName', 'category']
+    search_fields = ['artist__nickname', 'name', 'album__name', 'category']
     filter_backends = (filters.SearchFilter,)
     queryset = models.Song.objects.all().order_by('album__name')
     serializer_class = models.SongSerializer
