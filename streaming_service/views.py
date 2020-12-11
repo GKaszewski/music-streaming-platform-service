@@ -40,6 +40,12 @@ class SongViewSet(viewsets.ModelViewSet):
         serializer = models.SongSerializer(new_song)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    def delete(self, request, *args, **kwargs):
+        data = request.data
+        song = get_object_or_404(models.Song, id=data['id'])
+        song.delete()
+        return Response('Success!', status=status.HTTP_200_OK)
+
 class PlaylistViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'author',]
     filter_backends = (filters.SearchFilter,)
@@ -81,7 +87,7 @@ class PlaylistViewSet(viewsets.ModelViewSet):
         if not playlist:
             return Response("Couldn't find.",status=status.HTTP_404_NOT_FOUND)
         playlist.delete()
-        return Response('Deleted!', status=status.HTTP_200_OK)
+        return Response('Success!', status=status.HTTP_200_OK)
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = models.UserSerializer
@@ -131,6 +137,12 @@ class ArtistViewSet(viewsets.ModelViewSet):
         artist_serializer = models.ArtistSerializer(artist)
         artist_data = artist_serializer.data
         return Response(artist_data, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, *args, **kwargs):
+        data = request.data
+        artist = get_object_or_404(models.Artist, id=data['id'])
+        artist.delete()
+        return Response('Success!', status=status.HTTP_200_OK)
 
 class FollowerViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
