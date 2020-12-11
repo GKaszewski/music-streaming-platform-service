@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% load markdownify %}
+{% load markdownify %}
+<h1 class="text-center">API - Documentation</h1>
+<div class="m-4">
   {{ markdowntext | markdownify | linebreaks }}
-{% endblock %} 
+</div>
+{% endblock %}
