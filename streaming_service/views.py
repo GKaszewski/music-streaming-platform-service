@@ -31,6 +31,7 @@ class SongViewSet(viewsets.ModelViewSet):
     serializer_class = models.SongSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsOwnProfile, IsArtist)
+    lookup_field = 'id'
 
     def create(self, request, *args, **kwargs):
         artist = models.Artist.objects.get(user=request.user)
@@ -46,6 +47,7 @@ class PlaylistViewSet(viewsets.ModelViewSet):
     serializer_class = models.PlaylistSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     authentication_classes = (TokenAuthentication,)
+    lookup_field = 'id'
 
     def create(self, request, *args, **kwargs):
         user = request.user
@@ -84,7 +86,7 @@ class PlaylistViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = models.UserSerializer
     queryset = models.User.objects.all()
-    lookup_field = 'username'
+    lookup_field = 'id'
     authentication_classes = (TokenAuthentication,)
     permissions_classes = (permissions.IsAuthenticated,)
 
@@ -108,7 +110,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class ArtistViewSet(viewsets.ModelViewSet):
     serializer_class = models.ArtistSerializer
     queryset = models.Artist.objects.all().order_by('nickname')
-    lookup_field = 'nickname'
+    lookup_field = 'id'
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsOwnProfile, )
 
@@ -130,7 +132,28 @@ class ArtistViewSet(viewsets.ModelViewSet):
         artist_data = artist_serializer.data
         return Response(artist_data, status=status.HTTP_201_CREATED)
 
-    
+class FollowerViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = models.UserFollowerSerializer
+    queryset = models.Follower.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        user = request.user
+        following_user = models.User.objects.get(id=data['following_user_id'])
+        new_following, created = models.Follower.objects.get_or_create(follower_user=user, following_user=following_user)
+        if not created:
+            return Response("Couldn't create.", status=status.HTTP_400_BAD_REQUEST)
+        new_following.save()
+        return Response(models.UserFollowerSerializer(new_following).data, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, *kargs, **kwargs):
+        data = request.data
+        following_user = get_object_or_404(models.Follower, id=data['id'])
+        following_user.delete()
+        return Response('Success!', status=status.HTTP_200_OK)    
+        
 class AuthUserToken(ObtainAuthToken):
     permissions_classes = (permissions.AllowAny,)
     def post(self, request, *args, **kwargs):

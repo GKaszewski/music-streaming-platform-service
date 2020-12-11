@@ -45,17 +45,59 @@ class Playlist(models.Model):
     def __str__(self):
         return self.name
 
-class UserSerializer(serializers.ModelSerializer):
+
+class Follower(models.Model):
+    follower_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following_user')
+    following_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers_user')
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['follower_user', 'following_user'], name='unique_followers')
+        ]
+
+        ordering = ['-created']
+
+    def __str__(self):
+        return "{} follows {}".format(self.follower_user.username, self.following_user.username)
+
+class PartialUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'avatar_url')
+        fields = ('id', 'username')
+
+class FollowingSerializer(serializers.ModelSerializer):
+    following_user = PartialUserSerializer()
+    class Meta:
+        model = Follower
+        fields = ('id', 'following_user', 'created')
+
+class FollowersSerializer(serializers.ModelSerializer):
+    follower_user = PartialUserSerializer()
+    class Meta:
+        model = Follower
+        fields = ('id', 'follower_user', 'created')
+
+class UserSerializer(serializers.ModelSerializer):
+    following_user = serializers.SerializerMethodField()
+    followers_user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'password', 'avatar_url', 'following_user', 'followers_user')
         extra_kwargs = {'password': {'write_only' : True, 'required' : True},}
+
+    def get_following_user(self, obj):
+        return FollowingSerializer(obj.following_user.all(), many=True).data
+    
+    def get_followers_user(self, obj):
+        return FollowersSerializer(obj.followers_user.all(), many=True).data
 
 class ArtistSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = Artist
-        fields = ('user', 'nickname', 'bio')
+        fields = ('id', 'user', 'nickname', 'bio')
         ordering = ['-nickname']
 
 
@@ -71,7 +113,7 @@ class SongSerializer(serializers.ModelSerializer):
     album = AlbumSerializer()
     class Meta:
         model = Song
-        fields = ('album', 'artist', 'song_url' ,'name', 'category')
+        fields = ('id', 'album', 'artist', 'song_url' ,'name', 'category')
         ordering = ['-artist__nickname', '-name']
 
 class PlaylistSerializer(serializers.ModelSerializer):
@@ -84,4 +126,10 @@ class PlaylistSerializer(serializers.ModelSerializer):
         extra_kwargs = {'content': {'required': False}}
 
 
+class UserFollowerSerializer(serializers.ModelSerializer):
+    follower_user = PartialUserSerializer()
+    following_user = PartialUserSerializer()
 
+    class Meta:
+        model = Follower
+        fields = '__all__'

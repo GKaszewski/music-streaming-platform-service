@@ -8,6 +8,7 @@ router.register('songs', views.SongViewSet, basename='songs')
 router.register('playlists', views.PlaylistViewSet, basename='playlists')
 router.register('users', views.UserViewSet, basename='users')
 router.register('artists', views.ArtistViewSet, basename='artists')
+router.register('follow', views.FollowerViewSet, basename='follow')
 
 urlpatterns = [
     path('', views.MarkdownIndex.as_view(), name='indexPage'),
