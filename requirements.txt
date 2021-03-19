@@ -1,5 +1,5 @@
 Django>=3.0.7
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 django-cors-headers==3.3.0
 django-markdownify == 0.8.0
 markdown == 3.1.1
